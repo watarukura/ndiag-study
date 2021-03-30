@@ -1,0 +1,58 @@
+---
+name: Sample AWS web service
+docPath: docs/arch
+views:
+  -
+    name: overview
+nodes:
+  -
+    name: cdn
+    components:
+      - CloudFront?icon=aws-cloud-front
+      - Waf?icon=aws-waf
+  -
+    name: frontend
+    components:
+      - Beanstalk?icon=aws-res-elastic-beanstalk-application
+  -
+    name: api
+    components:
+      - ECS?icon=aws-res-elastic-container-service-service
+  -
+    name: db
+    components:
+      - AuroraMySQL?icon=aws-aurora 
+  -
+    name: dynamodb
+    components:
+      - DynamoDB?icon=aws-dynamo-db
+networks:
+  -
+    route:
+      - "internet"
+      - "cdn:CloudFront"
+  -
+    route:
+      - "cdn:CloudFront"
+      - "frontend:Beanstalk"
+  -
+    route:
+      - "frontend:Beanstalk"
+      - "api:ECS"
+  -
+    route:
+      - "api:ECS"
+      - "dynamodb:DynamoDB"
+  -
+    route:
+      - "api:ECS"
+      - "db:AuroraMySQL"
+  -
+    route:
+      - "api:ECS"
+      - "Payment API"
+relations:
+  -
+    components:
+      - "cdn:CloudFront"
+      - "cdn:Waf"
