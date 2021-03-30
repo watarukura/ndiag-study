@@ -4,28 +4,39 @@ docPath: docs/arch
 views:
   -
     name: overview
+    layers: ["aws"]
 nodes:
   -
     name: cdn
     components:
       - CloudFront?icon=aws-cloud-front
       - Waf?icon=aws-waf
+    clusters:
+      - "aws:account1?icon=aws-virtual-private-cloud"
   -
     name: frontend
     components:
-      - Beanstalk?icon=aws-res-elastic-beanstalk-application
+      - Beanstalk?icon=aws-elastic-beanstalk
+    clusters:
+      - "aws:account2?icon=aws-virtual-private-cloud"
   -
     name: api
     components:
-      - ECS?icon=aws-res-elastic-container-service-service
+      - ECS?icon=aws-elastic-container-service
+    clusters:
+      - "aws:account3?icon=aws-virtual-private-cloud"
   -
     name: db
     components:
       - AuroraMySQL?icon=aws-aurora 
+    clusters:
+      - "aws:account3?icon=aws-virtual-private-cloud"
   -
     name: dynamodb
     components:
       - DynamoDB?icon=aws-dynamo-db
+    clusters:
+      - "aws:account3?icon=aws-virtual-private-cloud"
 networks:
   -
     route:
